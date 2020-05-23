@@ -114,8 +114,8 @@ where
         })
     }
 
-    /// Return the raw gfx shader resource associated with this image.
-    pub fn raw_texture_resource_view(&self) -> &gfx::handle::RawShaderResourceView<B::Resources> {
+    /// Return the raw gfx shader resource view associated with this image.
+    pub fn raw_shader_resource_view(&self) -> &gfx::handle::RawShaderResourceView<B::Resources> {
         &self.texture
     }
 
