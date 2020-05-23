@@ -1,8 +1,8 @@
 use std::io::Read;
 use std::path;
 
-use ::image;
 use gfx;
+use ::image;
 
 use crate::context::{Context, DebugId};
 use crate::error::GameError;
@@ -112,6 +112,36 @@ where
             height,
             debug_id,
         })
+    }
+
+    /// Return the raw gfx shader resource associated with this image.
+    pub fn raw_texture_resource_view(&self) -> &gfx::handle::RawShaderResourceView<B::Resources> {
+        &self.texture
+    }
+
+    /// Return the raw gfx texture handle associated with this image.
+    pub fn raw_texture(&self) -> &gfx::handle::RawTexture<B::Resources> {
+        &self.texture_handle
+    }
+
+    /// Return the full sampler used for rendering this image.
+    pub fn sampler_info(&self) -> &gfx::texture::SamplerInfo {
+        &self.sampler_info
+    }
+
+    /// Return the blend mode used for rendering this image.
+    pub fn blend_mode(&self) -> Option<BlendMode> {
+        self.blend_mode
+    }
+
+    /// Return the width of the image.
+    pub fn width(&self) -> u16 {
+        self.width
+    }
+
+    /// Return the height of the image.
+    pub fn height(&self) -> u16 {
+        self.height
     }
 }
 
@@ -268,16 +298,6 @@ impl Image {
             buffer.extend(&pixel_array[..]);
         }
         Image::from_rgba8(context, size, size, &buffer)
-    }
-
-    /// Return the width of the image.
-    pub fn width(&self) -> u16 {
-        self.width
-    }
-
-    /// Return the height of the image.
-    pub fn height(&self) -> u16 {
-        self.height
     }
 
     /// Get the filter mode for the image.
